@@ -20,11 +20,11 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
-    "basUrl": ".",
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "src/components/mode-toggle.tsx", "src/components/theme-provider.tsx", "lib"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
