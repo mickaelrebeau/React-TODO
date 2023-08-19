@@ -4,7 +4,7 @@ import { TodoService } from './todo.service';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Todo } from './entities/todo.entity';
 
-@Controller('todo')
+@Controller('todos')
 @ApiTags('todos')
 export class TodoController {
     constructor(
@@ -16,7 +16,7 @@ export class TodoController {
         description: "Get all todos",
     })
     findAll(): Promise<Todo[]> {
-        return this.todoService.findAll();
+        return this.todoService.findAll();      
     }
 
     @Get('/:id')
