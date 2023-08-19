@@ -2,6 +2,12 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
+enum Status {
+    TODO = "todo",
+    IN_PROGRESS = "in progress",
+    DONE = "done"
+}
+
 enum Priority {
     LOW = "low",
     MEDIUM = "medium",
@@ -28,9 +34,13 @@ export class Todo {
     @ApiProperty({ example: "Test", description: 'The description of the todo' })
     description: string;
 
-    @Column({ default: false})
-    @ApiProperty({ example: false, description: 'The status of the todo' })
-    status: boolean;
+    @Column({ 
+        type: "enum",
+        enum: Status,
+        default: Status.TODO
+    })
+    @ApiProperty({ example: "In progess", description: 'The status of the todo' })
+    status: Status;
 
     @Column({
         type: "enum",
