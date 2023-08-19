@@ -6,7 +6,6 @@ import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 
 import { labels, priorities, statuses } from "../data/data"
-// import { Task } from "../data/schema"
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions"
 
@@ -38,7 +37,7 @@ export const columns: any = [
     accessorKey: "id",
     // @ts-ignore
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Task" />
+      <DataTableColumnHeader column={column} title="ID" />
     ),
     // @ts-ignore
     cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
@@ -58,8 +57,25 @@ export const columns: any = [
       return (
         <div className="flex space-x-2">
           {label && <Badge variant="outline">{label.label}</Badge>}
-          <span className="max-w-[500px] truncate font-medium">
+          <span className="max-w-[200px] truncate font-medium">
             {row.getValue("title")}
+          </span>
+        </div>
+      )
+    },
+  },
+  {
+    accessorKey: "description",
+    // @ts-ignore
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Description" />
+    ),
+    // @ts-ignore
+    cell: ({ row }) => {
+      return (
+        <div className="flex space-x-2">
+          <span className="max-w-[500px] truncate font-medium">
+            {row.getValue("description")}
           </span>
         </div>
       )
@@ -75,7 +91,7 @@ export const columns: any = [
     cell: ({ row }) => {
       const status = statuses.find(
         (status) => status.value === row.getValue("status")
-      )
+      );
 
       if (!status) {
         return null
