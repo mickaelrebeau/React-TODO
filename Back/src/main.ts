@@ -9,7 +9,7 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.use(cors({
-    origin: 'http://localhost:5173', // frontend's origin
+    origin: 'http://localhost:5174', // frontend's origin
     credentials: true,
   }));
 
@@ -22,6 +22,6 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('/api', app, document );
   
-  await app.listen(3000);
+  await app.listen(3033);
 }
 bootstrap();
