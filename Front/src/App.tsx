@@ -4,6 +4,7 @@ import Home from "./pages/Home/HomePage"
 import Navbar  from "./components/navbar"
 import { Route, Routes } from "react-router-dom"
 import { CreateTodo } from "./pages/Todo/CreateTodoPage"
+import { UpdateTodo } from "./pages/Todo/EditTodoPage"
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/new-todo" element={<CreateTodo />} />
+          <Route path="/todos/:taskId" element={<UpdateTodo />} />
         </Routes>
       </ThemeProvider>
     </>

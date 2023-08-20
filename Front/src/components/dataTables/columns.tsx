@@ -144,6 +144,6 @@ export const columns: any = [
   {
     id: "actions",
     // @ts-ignore
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    cell: ({ row }) => <DataTableRowActions row={row} taskId={row.original.id}/>,
   },
 ]
