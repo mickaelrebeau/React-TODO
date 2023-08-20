@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import DataTable from "@/src/components/data-table";
-import { columns } from "../../components/columns"
+import DataTable from "@/src/components/dataTables/dataTable";
+import { columns } from "../../components/dataTables/columns"
 import { getAllTodos } from "@/src/services/api/todo";
 import { useEffect, useState } from "react";
 
