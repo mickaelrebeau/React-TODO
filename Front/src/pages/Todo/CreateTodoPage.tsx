@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button"
 import {
     Card,
@@ -5,83 +6,176 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-  } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/card"
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from "@/components/ui/select"
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+} from "@/components/ui/form"
+
+import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 
+import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { createTodo } from "@/src/services/api/todo"
+import { useNavigate } from "react-router-dom"
+
   export function CreateTodo() {
+    const navigate = useNavigate();
+
+    const FormSchema = z.object({
+        title: z.string()
+        .min(3, "Title is too short")
+        .max(20, "Title is too long"),
+        description: z.string()
+        .min(3, "Description is too short"),
+        status: z.string(),
+        label: z.string(),
+        priority: z.string(),
+    })
+    
+    
+    const form = useForm<z.infer<typeof FormSchema>>({
+        resolver: zodResolver(FormSchema),
+    })
+    
+
+    async function onSubmit(values: any) {
+        const { title, description, status, priority, label } = values
+        const todo = { title, description, status, priority, label }
+
+        const response = await createTodo(todo)
+
+        if (response) {
+            console.log(response)
+            navigate('/')
+        }
+    }
+
     return (
-        <div className="flex items-center justify-center mt-12">
+        <>
+        <div className="flex items-center justify-center mt-8">
             <Card className="w-[400px]">
-                <CardHeader>
-                    <CardTitle>Create a new task</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <form className="text-left">
-                        <div className="grid w-full items-center gap-4">
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="text-left">
+                        <CardHeader>
+                            <CardTitle>Create a new task</CardTitle>
+                        </CardHeader>
+                        <CardContent>
                             <div className="flex flex-col space-y-1.5">
-                                <Label htmlFor="name">Title</Label>
-                                <Input id="name" placeholder="Name of your project" />
+                                <FormField
+                                control={form.control}
+                                name="title"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Title</FormLabel>
+                                        <Input id="name" placeholder="Title of your task" type="text"
+                                        onChange={field.onChange} name="title" value={field.value}/>
+                                    </FormItem>
+                                )}
+                                />
                             </div>
                             <div className="flex flex-col space-y-1.5">
-                                <Label htmlFor="description">Description</Label>
-                                <Textarea id="description" placeholder="Add a description to your task here." />
+                                <FormField
+                                control={form.control}
+                                name="description"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Description</FormLabel>
+                                        <Textarea id="description" placeholder="Add a description to your task here." 
+                                        onChange={field.onChange} name="description" value={field.value}/>
+                                    </FormItem>
+                                )}
+                                />
                             </div>
                             <div className="flex flex-col space-y-1.5">
-                                <Label htmlFor="status">Status</Label>
-                                <Select>
-                                    <SelectTrigger id="status">
-                                        <SelectValue placeholder="Select" />
-                                    </SelectTrigger>
-                                    <SelectContent position="popper">
-                                        <SelectItem value="next">Todo</SelectItem>
-                                        <SelectItem value="sveltekit">In progress</SelectItem>
-                                        <SelectItem value="astro">Done</SelectItem>
-                                    </SelectContent>
-                                </Select>
+                                <FormField
+                                control={form.control}
+                                name="status"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Status</FormLabel>
+                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                            <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select" />
+                                            </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent position="popper">
+                                                <SelectItem value="todo">Todo</SelectItem>
+                                                <SelectItem value="in progress">In progress</SelectItem>
+                                                <SelectItem value="done">Done</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </FormItem>
+                                )}
+                                />
                             </div>
                             <div className="flex flex-col space-y-1.5">
-                                <Label htmlFor="labels">Label</Label>
-                                <Select>
-                                    <SelectTrigger id="labels">
-                                        <SelectValue placeholder="Select" />
-                                    </SelectTrigger>
-                                    <SelectContent position="popper">
-                                        <SelectItem value="next">Bug</SelectItem>
-                                        <SelectItem value="sveltekit">Feature</SelectItem>
-                                        <SelectItem value="astro">Documentation</SelectItem>
-                                    </SelectContent>
-                                </Select>
+                                <FormField
+                                control={form.control}
+                                name="label"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Label</FormLabel>
+                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                            <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select" />
+                                            </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent position="popper">
+                                                <SelectItem value="bug">Bug</SelectItem>
+                                                <SelectItem value="feature">Feature</SelectItem>
+                                                <SelectItem value="documentation">Documentation</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </FormItem>
+                                )}
+                                />
                             </div>
                             <div className="flex flex-col space-y-1.5">
-                                <Label htmlFor="priorities">Priority</Label>
-                                <Select>
-                                    <SelectTrigger id="priorities">
-                                        <SelectValue placeholder="Select" />
-                                    </SelectTrigger>
-                                    <SelectContent position="popper">
-                                        <SelectItem value="next">Low</SelectItem>
-                                        <SelectItem value="sveltekit">Medium</SelectItem>
-                                        <SelectItem value="astro">High</SelectItem>
-                                    </SelectContent>
-                                </Select>
+                                <FormField
+                                control={form.control}
+                                name="priority"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Priority</FormLabel>
+                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                            <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select" />
+                                            </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent position="popper">
+                                                <SelectItem value="low">Low</SelectItem>
+                                                <SelectItem value="medium">Medium</SelectItem>
+                                                <SelectItem value="high">High</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </FormItem>
+                                )}
+                                />
                             </div>
-                        </div>
+                        </CardContent>
+                        <CardFooter>
+                            <Button className="w-full" variant="secondary" type="submit">Confirm</Button>
+                        </CardFooter>
                     </form>
-                </CardContent>
-                <CardFooter className="gap-8">
-                    <Button variant="outline">Cancel</Button>
-                    <Button>Confirm</Button>
-                </CardFooter>
+                </Form>
             </Card>
         </div>
+        </>
     )
 }
