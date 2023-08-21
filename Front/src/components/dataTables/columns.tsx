@@ -53,11 +53,12 @@ export const columns: any = [
     // @ts-ignore
     cell: ({ row }) => {
       const label = labels.find((label) => label.value === row.original.label)
+      const isDone = row.original.status === "done";
 
       return (
         <div className="flex space-x-2">
           {label && <Badge variant="outline">{label.label}</Badge>}
-          <span className="max-w-[200px] truncate font-medium">
+          <span className={`max-w-[200px] truncate font-medium ${isDone ? "line-through" : ''}`}>
             {row.getValue("title")}
           </span>
         </div>
