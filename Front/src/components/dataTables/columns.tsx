@@ -58,7 +58,7 @@ export const columns: any = [
       return (
         <div className="flex space-x-2">
           {label && <Badge variant="outline">{label.label}</Badge>}
-          <span className={`max-w-[200px] truncate font-medium ${isDone ? "line-through" : ''}`}>
+          <span className={`max-w-[200px] truncate font-medium ${isDone ? "line-through opacity-50" : ''}`}>
             {row.getValue("title")}
           </span>
         </div>
