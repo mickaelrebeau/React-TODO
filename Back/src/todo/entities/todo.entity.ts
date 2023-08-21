@@ -34,5 +34,5 @@ export class Todo {
 
     @Column({ nullable: true })
     @ApiProperty({ example: "2020-01-01", description: 'The deadline of the todo' })
-    deadline: string | null;
+    deadline: Date | null;
 }
