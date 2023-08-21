@@ -21,15 +21,24 @@ import {
     FormItem,
     FormLabel,
 } from "@/components/ui/form"
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover"
 
+import { Calendar } from "@/components/ui/calendar"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 
 import * as z from "zod"
+import { cn } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { format } from "date-fns";
 import { createTodo } from "@/src/services/api/todo"
 import { useNavigate } from "react-router-dom"
+import { CalendarIcon } from "lucide-react"
 
   export function CreateTodo() {
     const navigate = useNavigate();
@@ -40,6 +49,8 @@ import { useNavigate } from "react-router-dom"
         .max(20, "Title is too long"),
         description: z.string()
         .min(3, "Description is too short"),
+        deadline: z.date()
+        .optional(),
         status: z.string(),
         label: z.string(),
         priority: z.string(),
@@ -52,8 +63,11 @@ import { useNavigate } from "react-router-dom"
     
 
     async function onSubmit(values: any) {
-        const { title, description, status, priority, label } = values
-        const todo = { title, description, status, priority, label }
+        const { title, description, deadline, status, priority, label } = values;
+        const formattedDate = deadline ? format(deadline, "yyyy-MM-dd") : undefined;
+
+        const todo = { title, description, deadline: formattedDate, status, priority, label }
+        console.log(todo);
 
         const response = await createTodo(todo)
 
@@ -99,13 +113,57 @@ import { useNavigate } from "react-router-dom"
                                 )}
                                 />
                             </div>
+                            <div className="flex flex-col space-y-1.5 py-2">
+                                <FormField 
+                                control={form.control}
+                                name="deadline"
+                                render={({ field }) => (
+                                    <FormItem className="flex flex-col gap-0.5">
+                                        <FormLabel>
+                                            Deadline 
+                                            <span className="font-normal ml-2 opacity-50">(optionnal)</span>
+                                        </FormLabel>
+                                        <Popover>
+                                            <PopoverTrigger asChild>
+                                                <FormControl>
+                                                    <Button
+                                                    variant={"outline"}
+                                                    className={cn(
+                                                        "justify-start text-left font-normal",
+                                                        !field.value && "text-muted-foreground"
+                                                    )}
+                                                    >
+                                                        <CalendarIcon className="mr-2 h-4 w-4" />
+                                                        {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
+                                                    </Button>
+                                                </FormControl>
+                                            </PopoverTrigger>
+                                            <PopoverContent className="w-auto p-0">
+                                                <Calendar
+                                                mode="single"
+                                                selected={field.value}
+                                                onSelect={field.onChange}
+                                                disabled={(date) =>
+                                                    date < new Date() 
+                                                }
+                                                initialFocus
+                                                />
+                                            </PopoverContent>
+                                        </Popover>
+                                    </FormItem>
+                                )}
+                                />
+                            </div>
                             <div className="flex flex-col space-y-1.5">
                                 <FormField
                                 control={form.control}
                                 name="status"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Status</FormLabel>
+                                        <FormLabel>
+                                            Status 
+                                            <span className="font-normal ml-2 opacity-50">(default: Todo)</span>
+                                        </FormLabel>
                                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                                             <FormControl>
                                             <SelectTrigger>
@@ -128,7 +186,10 @@ import { useNavigate } from "react-router-dom"
                                 name="label"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Label</FormLabel>
+                                        <FormLabel>
+                                            Label 
+                                            <span className="font-normal ml-2 opacity-50">(default: Feature)</span>
+                                        </FormLabel>
                                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                                             <FormControl>
                                             <SelectTrigger>
@@ -151,7 +212,10 @@ import { useNavigate } from "react-router-dom"
                                 name="priority"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Priority</FormLabel>
+                                        <FormLabel>
+                                            Priority 
+                                            <span className="font-normal ml-2 opacity-50">(default: Medium)</span>
+                                        </FormLabel>
                                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                                             <FormControl>
                                             <SelectTrigger>
