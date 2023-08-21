@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button"
 import {
@@ -35,7 +36,7 @@ import { useEffect, useState } from "react"
   export function UpdateTodo() {
     const { taskId } = useParams();
     const navigate = useNavigate();
-
+    
     const [todos, setTodos] = useState({
         title: "",
         description: "",
@@ -54,6 +55,8 @@ import { useEffect, useState } from "react"
                 label: response?.data.label,
                 priority: response?.data.priority
             })
+            form.reset(response?.data);
+            console.log('heeee', form)
         })
         .catch((err) => console.log(err));
     }, [taskId]);
@@ -74,13 +77,15 @@ import { useEffect, useState } from "react"
         .optional(),
     })
 
+    const form = useForm<z.infer<typeof FormSchema>>({
+        resolver: zodResolver(FormSchema),
+        defaultValues: todos
+    })
     console.log(todos);
     
     
-    const form = useForm<z.infer<typeof FormSchema>>({
-        resolver: zodResolver(FormSchema),
-        defaultValues: todos,
-    })
+  
+    console.log(form)
     
 
     async function onSubmit(values: any) {
@@ -153,7 +158,7 @@ import { useEffect, useState } from "react"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Status</FormLabel>
-                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                        <Select onValueChange={field.onChange} value={field.value}>
                                             <FormControl>
                                             <SelectTrigger>
                                                 <SelectValue placeholder="Select" />
@@ -176,7 +181,7 @@ import { useEffect, useState } from "react"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Label</FormLabel>
-                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                        <Select onValueChange={field.onChange} value={field.value}>
                                             <FormControl>
                                             <SelectTrigger>
                                                 <SelectValue placeholder="Select" />
@@ -199,7 +204,7 @@ import { useEffect, useState } from "react"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Priority</FormLabel>
-                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                        <Select onValueChange={field.onChange} value={field.value}>
                                             <FormControl>
                                             <SelectTrigger>
                                                 <SelectValue placeholder="Select" />
