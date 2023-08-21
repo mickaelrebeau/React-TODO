@@ -51,9 +51,12 @@ import { CalendarIcon } from "lucide-react"
         .min(3, "Description is too short"),
         deadline: z.date()
         .optional(),
-        status: z.string(),
-        label: z.string(),
-        priority: z.string(),
+        status: z.string()
+        .optional(),
+        label: z.string()
+        .optional(),
+        priority: z.string()
+        .optional(),
     })
     
     
@@ -64,10 +67,8 @@ import { CalendarIcon } from "lucide-react"
 
     async function onSubmit(values: any) {
         const { title, description, deadline, status, priority, label } = values;
-        const formattedDate = deadline ? format(deadline, "yyyy-MM-dd") : undefined;
 
-        const todo = { title, description, deadline: formattedDate, status, priority, label }
-        console.log(todo);
+        const todo = { title, description, deadline, status, priority, label }
 
         const response = await createTodo(todo)
 
