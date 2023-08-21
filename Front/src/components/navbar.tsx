@@ -21,22 +21,22 @@ export default function Navbar() {
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>
-                            <a href="https://github.com/mickaelrebeau" rel="noopener">Github</a>   
+                            <a href="https://github.com/mickaelrebeau" rel="noopener">My Github</a>   
                         </DropdownMenuItem>
                         <DropdownMenuItem>
-                            <a href="https://www.linkedin.com/in/mickael-r%C3%A9beau/" rel="noopener">Linkedin</a>
+                            <a href="https://www.linkedin.com/in/mickael-r%C3%A9beau/" rel="noopener">My Linkedin</a>
                         </DropdownMenuItem>
                         <DropdownMenuItem>
-                            <a href="https://www.instagram.com/mike_photocollection/" rel="noopener">Instagram</a>
+                            <a href="https://www.instagram.com/mike_photocollection/" rel="noopener">My Instagram</a>
                         </DropdownMenuItem>
                         <DropdownMenuItem>
-                            <a href="https://www.twitch.tv/mike_dreeman" rel="noopener">Twitch</a>
+                            <a href="https://www.twitch.tv/mike_dreeman" rel="noopener">My Twitch</a>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
                 <div className="flex gap-8 items-center">
-                    <p><NavLink to="/" >Todos</NavLink></p>
-                    <p><NavLink to="/new-todo" >Add a todo</NavLink></p>
+                    <p><NavLink to="/" >Tasks</NavLink></p>
+                    <p><NavLink to="/new-todo" >Add a task</NavLink></p>
                 </div>
                 <ModeToggle />
             </nav>

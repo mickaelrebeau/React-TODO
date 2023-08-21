@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// import { ColumnDef } from "@tanstack/react-table"
 
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -37,7 +36,7 @@ export const columns: any = [
     accessorKey: "id",
     // @ts-ignore
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="ID" />
+      <DataTableColumnHeader column={column} title="Id" />
     ),
     // @ts-ignore
     cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
