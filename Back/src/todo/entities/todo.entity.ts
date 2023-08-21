@@ -2,23 +2,9 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-enum Status {
-    TODO = "todo",
-    IN_PROGRESS = "in progress",
-    DONE = "done"
-}
-
-enum Priority {
-    LOW = "low",
-    MEDIUM = "medium",
-    HIGH = "high"
-}
-
-enum Label {
-    BUG = "bug",
-    FEATURE = "feature",
-    DOCUMENTATION = "documentation"
-}
+type Status = "todo" | "in progress" | "done";
+type Priority = "low" | "medium" | "high";
+type Label = "bug" | "feature" | "documentation";
 
 @Entity()
 export class Todo {
@@ -34,27 +20,15 @@ export class Todo {
     @ApiProperty({ example: "Test", description: 'The description of the todo' })
     description: string;
 
-    @Column({ 
-        type: "enum",
-        enum: Status,
-        default: Status.TODO
-    })
+    @Column({ default: "todo" })
     @ApiProperty({ example: "In progess", description: 'The status of the todo' })
     status: Status;
 
-    @Column({
-        type: "enum",
-        enum: Label,
-        default: Label.FEATURE
-    })
+    @Column({ default: "feature" })
     @ApiProperty({ example: "bug", description: 'The label of the todo' })
     label: Label;
 
-    @Column({
-        type: "enum",
-        enum: Priority,
-        default: Priority.MEDIUM
-    })
+    @Column({ default: "medium" })
     @ApiProperty({ example: "medium", description: 'The priority of the todo' })
     priority: Priority;
 
