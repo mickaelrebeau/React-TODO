@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 
 import { Button } from "@/components/ui/button"
@@ -10,10 +11,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useNavigate } from "react-router-dom"
+import { deleteTodo } from "@/src/services/api/todo"
 
 
 export function DataTableRowActions({ taskId }: { taskId: string }) {
   const navigate = useNavigate()
+
+  const handleDelete = async () => {
+    await deleteTodo(taskId)
+    
+    // @ts-ignore
+    window.location.reload(false);
+  }
 
   return (
     <DropdownMenu>
@@ -33,7 +42,7 @@ export function DataTableRowActions({ taskId }: { taskId: string }) {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          Delete
+          <Button variant="ghost" className="h-6 w-6 p-0 data-[state=open]:bg-muted" onClick={handleDelete}>Delete</Button>
           <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>
