@@ -22,16 +22,25 @@ import {
     FormItem,
     FormLabel,
 } from "@/components/ui/form"
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover"
 
+import { Calendar } from "@/components/ui/calendar"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 
 import * as z from "zod"
+import { cn } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { format } from "date-fns";
 import { getTodo, updateTodo } from "@/src/services/api/todo"
 import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
+import { CalendarIcon } from "lucide-react"
 
   export function UpdateTodo() {
     const { taskId } = useParams();
@@ -40,6 +49,7 @@ import { useEffect, useState } from "react"
     const [todos, setTodos] = useState({
         title: "",
         description: "",
+        deadline: "",
         status: "",
         label: "",
         priority: "",
@@ -51,12 +61,12 @@ import { useEffect, useState } from "react"
             setTodos({
                 title: response?.data.title,
                 description: response?.data.description,
+                deadline: response?.data.deadline,
                 status: response?.data.status,
                 label: response?.data.label,
                 priority: response?.data.priority
             })
             form.reset(response?.data);
-            console.log('heeee', form)
         })
         .catch((err) => console.log(err));
     }, [taskId]);
@@ -68,6 +78,8 @@ import { useEffect, useState } from "react"
         .optional(),
         description: z.string()
         .min(3, "Description is too short")
+        .optional(),
+        deadline: z.date()
         .optional(),
         status: z.string()
         .optional(),
@@ -81,35 +93,39 @@ import { useEffect, useState } from "react"
         resolver: zodResolver(FormSchema),
         defaultValues: todos
     })
+    
     console.log(todos);
-    
-    
-  
     console.log(form)
     
 
     async function onSubmit(values: any) {
         try {
+            const formattedDate = values.deadline ? format(values.deadline, "yyyy-MM-dd") : '';
+
             const updatedTodo = {
                 title: values.title !== '' ? values.title : todos.title,
                 description: values.description !== '' ? values.description : todos.description,
+                deadline: formattedDate !== '' ? formattedDate : todos.deadline,
                 status: values.status !== '' ? values.status : todos.status,
                 label: values.label !== '' ? values.label : todos.label,
                 priority: values.priority !== '' ? values.priority : todos.priority
             };
+
             console.log(updatedTodo);
+            console.log(formattedDate);
 
             await updateTodo(taskId, updatedTodo)
 
             setTodos({
                 title: updatedTodo.title,
                 description: updatedTodo.description,
+                deadline: updatedTodo.deadline,
                 status: updatedTodo.status,
                 label: updatedTodo.label,
                 priority: updatedTodo.priority,
             })
 
-            navigate('/')
+            // navigate('/')
         } catch (error) {
             console.log(error);
         }  
@@ -147,6 +163,44 @@ import { useEffect, useState } from "react"
                                         <FormLabel>Description</FormLabel>
                                         <Textarea id="description" placeholder={todos.description} 
                                         onChange={field.onChange} name="description" value={field.value}/>
+                                    </FormItem>
+                                )}
+                                />
+                            </div>
+                            <div className="flex flex-col space-y-1.5 py-2">
+                                <FormField 
+                                control={form.control}
+                                name="deadline"
+                                render={({ field }) => (
+                                    <FormItem className="flex flex-col gap-0.5">
+                                        <FormLabel>Deadline (optionnal)</FormLabel>
+                                        <Popover>
+                                            <PopoverTrigger asChild>
+                                                <FormControl>
+                                                    <Button
+                                                    variant={"outline"}
+                                                    className={cn(
+                                                        "justify-start text-left font-normal",
+                                                        !field.value && "text-muted-foreground"
+                                                    )}
+                                                    >
+                                                        <CalendarIcon className="mr-2 h-4 w-4" />
+                                                        {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
+                                                    </Button>
+                                                </FormControl>
+                                            </PopoverTrigger>
+                                            <PopoverContent className="w-auto p-0">
+                                                <Calendar
+                                                mode="single"
+                                                selected={field.value}
+                                                onSelect={field.onChange}
+                                                disabled={(date) =>
+                                                    date < new Date() 
+                                                }
+                                                initialFocus
+                                                />
+                                            </PopoverContent>
+                                        </Popover>
                                     </FormItem>
                                 )}
                                 />
