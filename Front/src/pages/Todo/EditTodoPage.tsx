@@ -49,7 +49,7 @@ import { CalendarIcon } from "lucide-react"
     const [todos, setTodos] = useState({
         title: "",
         description: "",
-        deadline: "",
+        deadline: undefined,
         status: "",
         label: "",
         priority: "",
@@ -65,8 +65,11 @@ import { CalendarIcon } from "lucide-react"
                 status: response?.data.status,
                 label: response?.data.label,
                 priority: response?.data.priority
-            })
-            form.reset(response?.data);
+            });
+            form.reset({
+                ...response?.data,
+                deadline: response?.data.deadline ? format(response?.data.deadline, "PPP") : undefined,
+            });
         })
         .catch((err) => console.log(err));
     }, [taskId]);
@@ -100,30 +103,27 @@ import { CalendarIcon } from "lucide-react"
 
     async function onSubmit(values: any) {
         try {
-            const formattedDate = values.deadline ? format(values.deadline, "yyyy-MM-dd") : '';
-
-            const updatedTodo = {
+             const updatedTodo = {
                 title: values.title !== '' ? values.title : todos.title,
                 description: values.description !== '' ? values.description : todos.description,
-                deadline: formattedDate !== '' ? formattedDate : todos.deadline,
+                deadline: values.deadline !== '' ? values.deadline : todos.deadline,
                 status: values.status !== '' ? values.status : todos.status,
                 label: values.label !== '' ? values.label : todos.label,
                 priority: values.priority !== '' ? values.priority : todos.priority
             };
 
             console.log(updatedTodo);
-            console.log(formattedDate);
 
-            await updateTodo(taskId, updatedTodo)
+            // await updateTodo(taskId, updatedTodo)
 
-            setTodos({
-                title: updatedTodo.title,
-                description: updatedTodo.description,
-                deadline: updatedTodo.deadline,
-                status: updatedTodo.status,
-                label: updatedTodo.label,
-                priority: updatedTodo.priority,
-            })
+            // setTodos({
+            //     title: updatedTodo.title,
+            //     description: updatedTodo.description,
+            //     deadline: updatedTodo.deadline,
+            //     status: updatedTodo.status,
+            //     label: updatedTodo.label,
+            //     priority: updatedTodo.priority,
+            // })
 
             // navigate('/')
         } catch (error) {
@@ -148,7 +148,7 @@ import { CalendarIcon } from "lucide-react"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Title</FormLabel>
-                                        <Input id="name" placeholder={todos.title} type="text"
+                                        <Input id="name" type="text"
                                         onChange={field.onChange} name="title" value={field.value}/>
                                     </FormItem>
                                 )}
@@ -161,8 +161,7 @@ import { CalendarIcon } from "lucide-react"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Description</FormLabel>
-                                        <Textarea id="description" placeholder={todos.description} 
-                                        onChange={field.onChange} name="description" value={field.value}/>
+                                        <Textarea id="description" onChange={field.onChange} name="description" value={field.value}/>
                                     </FormItem>
                                 )}
                                 />
@@ -179,6 +178,7 @@ import { CalendarIcon } from "lucide-react"
                                                 <FormControl>
                                                     <Button
                                                     variant={"outline"}
+                                                    name="deadline"
                                                     className={cn(
                                                         "justify-start text-left font-normal",
                                                         !field.value && "text-muted-foreground"
