@@ -276,7 +276,7 @@ import { CalendarIcon } from "lucide-react"
                             </div>
                         </CardContent>
                         <CardFooter className="flex justify-center gap-8">
-                            <Button variant="outline" onClick={() => navigate(`/`)}>Annuler</Button>
+                            <Button variant="outline" onClick={() => navigate(`/`)}>Cancel</Button>
                             <Button variant="secondary" type="submit">Confirm</Button>
                         </CardFooter>
                     </form>
