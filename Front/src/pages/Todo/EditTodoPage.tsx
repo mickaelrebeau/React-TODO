@@ -36,7 +36,7 @@ import * as z from "zod"
 import { cn } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 import { getTodo, updateTodo } from "@/src/services/api/todo"
 import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
@@ -68,7 +68,7 @@ import { CalendarIcon } from "lucide-react"
             });
             form.reset({
                 ...response?.data,
-                deadline: response?.data.deadline ? format(response?.data.deadline, "PPP") : undefined,
+                deadline: response?.data.deadline ? parseISO(response?.data.deadline) : undefined,
             });
         })
         .catch((err) => console.log(err));
@@ -114,18 +114,18 @@ import { CalendarIcon } from "lucide-react"
 
             console.log(updatedTodo);
 
-            // await updateTodo(taskId, updatedTodo)
+            await updateTodo(taskId, updatedTodo)
 
-            // setTodos({
-            //     title: updatedTodo.title,
-            //     description: updatedTodo.description,
-            //     deadline: updatedTodo.deadline,
-            //     status: updatedTodo.status,
-            //     label: updatedTodo.label,
-            //     priority: updatedTodo.priority,
-            // })
+            setTodos({
+                title: updatedTodo.title,
+                description: updatedTodo.description,
+                deadline: updatedTodo.deadline,
+                status: updatedTodo.status,
+                label: updatedTodo.label,
+                priority: updatedTodo.priority,
+            })
 
-            // navigate('/')
+            navigate('/')
         } catch (error) {
             console.log(error);
         }  
