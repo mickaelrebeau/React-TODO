@@ -96,10 +96,6 @@ import { CalendarIcon } from "lucide-react"
         resolver: zodResolver(FormSchema),
         defaultValues: todos
     })
-    
-    console.log(todos);
-    console.log(form)
-    
 
     async function onSubmit(values: any) {
         try {
@@ -111,8 +107,6 @@ import { CalendarIcon } from "lucide-react"
                 label: values.label !== '' ? values.label : todos.label,
                 priority: values.priority !== '' ? values.priority : todos.priority
             };
-
-            console.log(updatedTodo);
 
             await updateTodo(taskId, updatedTodo)
 
@@ -195,7 +189,7 @@ import { CalendarIcon } from "lucide-react"
                                                 selected={field.value}
                                                 onSelect={field.onChange}
                                                 disabled={(date) =>
-                                                    date < new Date() 
+                                                    date < new Date(new Date().getTime() - 24 * 60 * 60 * 1000) 
                                                 }
                                                 initialFocus
                                                 />

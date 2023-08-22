@@ -145,7 +145,7 @@ import { CalendarIcon } from "lucide-react"
                                                 selected={field.value}
                                                 onSelect={field.onChange}
                                                 disabled={(date) =>
-                                                    date < new Date() 
+                                                    date < new Date(new Date().getTime() - 24 * 60 * 60 * 1000) 
                                                 }
                                                 initialFocus
                                                 />
