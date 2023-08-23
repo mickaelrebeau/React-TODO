@@ -2,41 +2,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Badge } from "@/components/ui/badge"
-import { Checkbox } from "@/components/ui/checkbox"
 
 import { labels, priorities, statuses } from "../../data/data"
 import { DataTableColumnHeader } from "./dataTableColumnHeader"
 import { DataTableRowActions } from "./dataTableRowActions"
 
+import { parseISO, isToday } from "date-fns"
+
 export const columns: any = [
-  {
-    id: "select",
-    // @ts-ignore
-    header: ({ table }) => (
-      <Checkbox
-        checked={table.getIsAllPageRowsSelected()}
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-        className="translate-y-[2px]"
-      />
-    ),
-    // @ts-ignore
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-        className="translate-y-[2px]"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
   {
     accessorKey: "id",
     // @ts-ignore
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Id" />
+      <DataTableColumnHeader column={column} title="Id" className="translate-x-9" />
     ),
     // @ts-ignore
     cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
@@ -54,12 +32,26 @@ export const columns: any = [
       const label = labels.find((label) => label.value === row.original.label)
       const isDone = row.original.status === "done";
 
+      const deadlineDate = row.original.deadline;
+      const parsedDeadline = deadlineDate ? parseISO(deadlineDate) : null;
+      const isTodayDeadline = parsedDeadline && isToday(parsedDeadline);
+      const isOverdue = parsedDeadline && parsedDeadline < new Date();
+
       return (
-        <div className="flex space-x-2">
-          {label && <Badge variant="outline">{label.label}</Badge>}
-          <span className={`max-w-[200px] truncate font-medium ${isDone ? "line-through opacity-50" : ''}`}>
-            {row.getValue("title")}
-          </span>
+        <div className="flex flex-col items-start space-x-2">
+          <div>
+            {label && <Badge variant="outline" className="mr-2">{label.label}</Badge>}
+            <span className={`max-w-[200px] truncate font-medium ${isDone ? "line-through opacity-50" : ''}`}>
+              {row.getValue("title")}
+            </span>
+          </div>
+          <div>
+            {parsedDeadline && (
+                <span className={isTodayDeadline ? "font-bold text-orange-400" : isOverdue ? "font-bold text-red-500" : ""}>
+                  {isTodayDeadline ? "Today !" : isOverdue ? "Expired !" : parsedDeadline.toDateString()}
+                </span>
+              )}
+          </div>
         </div>
       )
     },
