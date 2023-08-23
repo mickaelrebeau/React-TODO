@@ -39,9 +39,9 @@ export default function Navbar() {
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
-                <div className="flex gap-8 items-center">
-                    <p><NavLink to="/" >Tasks</NavLink></p>
-                    <p><NavLink to="/new-todo" >Add a task</NavLink></p>
+                <div className="flex gap-2 lg:gap-8 items-center">
+                    <p><NavLink to="/" className={ ({isActive}) => isActive ? "border-b-2 p-1 lg:p-2" : "" }>Tasks</NavLink></p>
+                    <p><NavLink to="/new-todo" className={ ({isActive}) => isActive ? "border-b-2 p-1 lg:p-2" : "" }>Add a task</NavLink></p>
                 </div>
                 <ModeToggle />
             </nav>
