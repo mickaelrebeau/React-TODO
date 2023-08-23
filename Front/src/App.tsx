@@ -5,6 +5,7 @@ import Navbar  from "./components/navbar"
 import { Route, Routes } from "react-router-dom"
 import { CreateTodo } from "./pages/Todo/CreateTodoPage"
 import { UpdateTodo } from "./pages/Todo/EditTodoPage"
+import Footer from "./components/footer"
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/new-todo" element={<CreateTodo />} />
           <Route path="/todos/:taskId" element={<UpdateTodo />} />
         </Routes>
+        <Footer />
       </ThemeProvider>
     </>
   )
