@@ -31,6 +31,12 @@ interface DataTableProps<TData, TValue> {
     data: TData[]
 }
 
+/**
+ * Generates a function comment for the given function body in a markdown code block with the correct language syntax.
+ *
+ * @param {DataTableProps<TData, TValue>} props - The props for the DataTable component.
+ * @returns {JSX.Element} - The rendered DataTable component.
+ */
 export default function DataTable<TData, TValue>({
     columns,
     data,

@@ -22,6 +22,14 @@ interface DataTableColumnHeaderProps<TData, TValue>
   title: string
 }
 
+/**
+ * Renders the header for a column in a data table.
+ *
+ * @param {DataTableColumnHeaderProps<TData, TValue>} column - The column object containing information about the column.
+ * @param {string} title - The title of the column.
+ * @param {string} className - Additional class name(s) to apply to the header element.
+ * @return {JSX.Element} The JSX element representing the column header.
+ */
 export function DataTableColumnHeader<TData, TValue>({
   column,
   title,

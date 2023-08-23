@@ -31,6 +31,15 @@ interface DataTableFacetedFilter<TData, TValue> {
   }[]
 }
 
+/**
+ * Generates the function comment for the given function body.
+ *
+ * @param {DataTableFacetedFilter<TData, TValue>} param - The parameter object.
+ * @param {TData} param.column - The column object.
+ * @param {string} param.title - The title of the button.
+ * @param {Array<{label: string, value: string, icon?: React.ElementType}>} param.options - The array of options.
+ * @return {JSX.Element} The JSX element.
+ */
 export function DataTableFacetedFilter<TData, TValue>({
   column,
   title,

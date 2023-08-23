@@ -17,10 +17,22 @@ import {
   TrashIcon
  } from "@radix-ui/react-icons"
 
-
+/**
+ * Renders the row actions component for the data table.
+ *
+ * @param {object} props - The properties for the component.
+ * @param {string} props.taskId - The ID of the task.
+ * @return {JSX.Element} The rendered row actions component.
+ */
 export function DataTableRowActions({ taskId }: { taskId: string }) {
   const navigate = useNavigate()
 
+  /**
+   * Deletes a todo item and reloads the page.
+   *
+   * @param {string} taskId - The ID of the task to delete.
+   * @return {Promise<void>} A promise that resolves when the task is deleted and the page is reloaded.
+   */
   const handleDelete = async () => {
     await deleteTodo(taskId)
     

@@ -19,6 +19,12 @@ import {
     table: Table<TData>
   }
   
+  /**
+   * Renders the pagination component for the DataTable.
+   *
+   * @param {DataTablePaginationProps<TData>} table - The DataTablePaginationProps object containing the table data.
+   * @return {JSX.Element} The pagination component.
+   */
   export function DataTablePagination<TData>({
     table,
   }: DataTablePaginationProps<TData>) {

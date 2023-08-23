@@ -8,7 +8,11 @@ import {
   DropdownMenuTrigger,
 } from "../../components/ui/dropdown-menu"
 import { useTheme } from "./theme-provider"
-
+/**
+ * Renders a mode toggle component.
+ *
+ * @return {JSX.Element} The rendered mode toggle component.
+ */
 export function ModeToggle() {
   const { setTheme } = useTheme()
 

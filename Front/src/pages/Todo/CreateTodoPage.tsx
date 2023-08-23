@@ -40,6 +40,18 @@ import { createTodo } from "@/src/services/api/todo"
 import { useNavigate } from "react-router-dom"
 import { CalendarIcon } from "lucide-react"
 
+/**
+ * Creates a new todo.
+ *
+ * @param {Object} values - An object containing the values for the todo.
+ * @param {string} values.title - The title of the todo.
+ * @param {string} values.description - The description of the todo.
+ * @param {Date} [values.deadline] - The deadline of the todo (optional).
+ * @param {string} [values.status] - The status of the todo (optional).
+ * @param {string} [values.priority] - The priority of the todo (optional).
+ * @param {string} [values.label] - The label of the todo (optional).
+ * @return {Promise<void>} A promise that resolves when the todo is created.
+ */
   export function CreateTodo() {
     const navigate = useNavigate();
 
@@ -65,7 +77,8 @@ import { CalendarIcon } from "lucide-react"
     })
     
 
-    async function onSubmit(values: any) {
+    async function onSubmit(values: 
+        { title?: string, description?: string, deadline?: Date, status?: string, priority?: string, label?: string }) {
         const { title, description, deadline, status, priority, label } = values;
 
         const todo = { title, description, deadline, status, priority, label }

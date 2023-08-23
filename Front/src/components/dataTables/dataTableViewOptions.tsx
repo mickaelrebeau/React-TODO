@@ -15,6 +15,12 @@ interface DataTableViewOptionsProps<TData> {
   table: Table<TData>
 }
 
+/**
+ * Generates the options for the DataTableView component.
+ *
+ * @param {DataTableViewOptionsProps<TData>} table - The DataTableViewOptionsProps object containing the table data.
+ * @return {JSX.Element} - The dropdown menu for the DataTableView component.
+ */
 export function DataTableViewOptions<TData>({
   table,
 }: DataTableViewOptionsProps<TData>) {

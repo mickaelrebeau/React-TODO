@@ -12,6 +12,12 @@ interface DataTableToolbarProps<TData> {
   table: Table<TData>
 }
 
+/**
+ * Renders the toolbar for the data table.
+ *
+ * @param {DataTableToolbarProps<TData>} props - The props for the DataTableToolbar component.
+ * @return {JSX.Element} - The rendered toolbar.
+ */
 export function DataTableToolbar<TData>({
   table,
 }: DataTableToolbarProps<TData>) {

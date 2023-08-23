@@ -5,6 +5,11 @@ import { columns } from "../../components/dataTables/columns"
 import { getAllTodos } from "@/src/services/api/todo";
 import { useEffect, useState } from "react";
 
+/**
+ * Renders the Home component.
+ *
+ * @return {JSX.Element} The rendered Home component.
+ */
 export default function Home() {
     const [tasks, setTasks] = useState([]);
 

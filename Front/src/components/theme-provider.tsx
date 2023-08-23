@@ -19,6 +19,15 @@ const initialState = {
 
 const ThemeProviderContext = createContext<ThemeProviderState>(initialState)
 
+/**
+ * Creates a ThemeProvider component that allows the user to set and manage the theme of the application.
+ *
+ * @param {ReactNode} children - The children components to be wrapped by the ThemeProvider.
+ * @param {string} defaultTheme - The default theme to be used if no theme is set.
+ * @param {string} storageKey - The key to be used for storing the theme in local storage.
+ * @param {...any} props - Additional props to be passed to the ThemeProvider.
+ * @return {ReactNode} The ThemeProvider component.
+ */
 export function ThemeProvider({
   children,
   defaultTheme = "system",
@@ -62,6 +71,11 @@ export function ThemeProvider({
   )
 }
 
+/**
+ * Returns the theme from the ThemeProviderContext.
+ *
+ * @return {any} The theme object.
+ */
 export const useTheme = () => {
   const context = useContext(ThemeProviderContext)
 

@@ -9,6 +9,11 @@ import {
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
 
+/**
+ * Renders the Navbar component.
+ *
+ * @return {JSX.Element} The rendered Navbar component.
+ */
 export default function Navbar() {
     return (
         <>
