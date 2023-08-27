@@ -13,6 +13,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "types": ["node", "vitest/globals" ,"@testing-library/jest-dom"],
 
     /* Linting */
     "strict": true,
@@ -25,6 +26,7 @@
       "@/*": ["./*"]
     }
   },
+  "types": ["node", "jest", "@testing-library/jest-dom"],
   "include": ["src", "src/components/mode-toggle.tsx", "src/components/theme-provider.tsx", "lib"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
