@@ -48,7 +48,7 @@ export const columns: any = [
           <div>
             {parsedDeadline && (
                 <span className={isTodayDeadline ? "font-bold text-orange-400" : isOverdue ? "font-bold text-red-500" : ""}>
-                  {isTodayDeadline ? "Today !" : isOverdue ? "Expired !" : parsedDeadline.toDateString()}
+                  {isTodayDeadline ? "Today !" : isOverdue && isDone ? "" : isOverdue ? "Overdue !" : parsedDeadline.toDateString()}
                 </span>
               )}
           </div>
