@@ -27,6 +27,6 @@
     }
   },
   "types": ["node", "jest", "@testing-library/jest-dom"],
-  "include": ["src", "src/components/mode-toggle.tsx", "src/components/theme-provider.tsx", "lib"],
+  "include": ["src", "src/components/mode-toggle.tsx", "src/components/theme-provider.tsx", "lib", "__tests__/eurostar.test.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
