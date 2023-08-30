@@ -14,10 +14,10 @@ export const columns: any = [
     accessorKey: "id",
     // @ts-ignore
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Id" className="translate-x-9" />
+      <DataTableColumnHeader column={column} title="Task" className="translate-x-9" />
     ),
     // @ts-ignore
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
+    cell: ({ row }) => <div className="w-[80px]">Task-{row.getValue("id")}</div>,
     enableSorting: false,
     enableHiding: false,
   },
