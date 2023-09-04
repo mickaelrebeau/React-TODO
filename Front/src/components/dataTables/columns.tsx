@@ -40,7 +40,7 @@ export const columns: any = [
       return (
         <div className="flex flex-col items-start space-x-2">
           <div>
-            {label && <Badge variant="outline" className="mr-2">{label.label}</Badge>}
+            {label && <Badge variant="outline" className={`mr-2 ${isDone ? "opacity-50" : ''}`}>{label.label}</Badge>}
             <span className={`max-w-[200px] truncate font-medium ${isDone ? "line-through opacity-50" : ''}`}>
               {row.getValue("title")}
             </span>
@@ -135,6 +135,7 @@ export const columns: any = [
   },
   {
     id: "actions",
+    accessorKey: "Actions",
     // @ts-ignore
     cell: ({ row }) => <DataTableRowActions row={row} taskId={row.original.id}/>,
   },
