@@ -21,7 +21,4 @@ export default defineConfig({
       "@": path.resolve(__dirname, "."),
     },
   },
-  server: {
-    port: 8000
-  }
 })
